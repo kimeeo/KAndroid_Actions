@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">KAndroid_Actions</string>
+
+    <string name="_yesClose">Yes</string>
+    <string name="_noClose">No</string>
+    <string name="_appDownloadMSG">is not install on your device. Would you like to install it now?</string>
+
+    <string name="_doNotAskAgain">Do not ask again</string>
+
+    <string name="_mayCostSMSChargeTitle">Attention</string>
+    <string name="_mayCostSMSCharge">We will be sending SMS from you mobile no. You may charge for this.</string>
+</resources>
