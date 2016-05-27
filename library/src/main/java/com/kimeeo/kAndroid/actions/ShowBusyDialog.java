@@ -61,6 +61,10 @@ public class ShowBusyDialog extends BaseAction{
 
         }
     }
+    public void perform(boolean hide) {
+        if(hide)
+            hideBusy();
+    }
 
     public void hideBusy() {
         if(progressDialog!=null)
