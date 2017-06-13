@@ -18,8 +18,6 @@ public class Action extends BaseAction{
     public static String ACTION_SMS="sms";
     public static String ACTION_SMS_DIRECT="smsDirect";
     public static String ACTION_OPEN_URL="openURL";
-    public static String ACTION_OPEN_URL_IN_APP="openURLInApp";
-    public static String ACTION_OPEN_URL_CHROME="openURLInChroame";
     public static String ACTION_MAIL_TO="mailto";
 
     public static String ACTION_SHOW_BUSY_DIALOG="showBusyDialog";
@@ -381,7 +379,6 @@ public class Action extends BaseAction{
         //val="openURLInApp?url=http://www.google.com&title=ABC&subTitle=dffs";
         //val="openURLInApp?url=http://www.google.com&title=ABC";
         //val="openURLInApp?url=http://www.google.com";
-
 
         //val="phone?no=8469492621";
 
