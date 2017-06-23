@@ -113,37 +113,36 @@ public class Share extends BaseAction {
         download.startWithConfig(downoladConfig);
     }
     public void share(String data, String subject, boolean isHTML, String shareWith, File file) {
-        if(data!=null && data.equals("")==false)
+        Uri uri=null;
+        if(file!=null)
+            uri=Uri.fromFile(file);
+        ShareCompat.IntentBuilder intentBuilder = ShareCompat.IntentBuilder.from(activity);
+        if(uri==null)
+            intentBuilder.setType("text/plain");
+        else
         {
-            Uri uri=null;
-            if(file!=null)
-                uri=Uri.fromFile(file);
-            ShareCompat.IntentBuilder intentBuilder = ShareCompat.IntentBuilder.from(activity);
-            if(uri==null)
-                intentBuilder.setType("text/plain");
-            else
-            {
-                intentBuilder.setStream(uri);
-                intentBuilder.setType(Download.getMimeType(file.getPath()));
-            }
+            intentBuilder.setStream(uri);
+            intentBuilder.setType(Download.getMimeType(file.getPath()));
+        }
 
-            intentBuilder.setChooserTitle(chooserTitle);
+        intentBuilder.setChooserTitle(chooserTitle);
 
-            if (subject != null)
-                intentBuilder.setSubject(subject);
+        if (subject != null)
+            intentBuilder.setSubject(subject);
 
-            if(data.indexOf("<a href")!=-1)
-                isHTML=true;
+        if(data!=null) {
+            if (data.indexOf("<a href") != -1)
+                isHTML = true;
 
             if (data != null && isHTML)
                 intentBuilder.setHtmlText(data);
             else if (data != null)
                 intentBuilder.setText(data);
-
-            if(shareWith!=null)
-                intentBuilder.getIntent().setPackage(shareWith);
-            intentBuilder.startChooser();
         }
+
+        if(shareWith!=null)
+            intentBuilder.getIntent().setPackage(shareWith);
+        intentBuilder.startChooser();
     }
     public void share(String data, String subject, boolean isHTML, String shareWith, Uri uri) {
         if(data!=null && data.equals("")==false)

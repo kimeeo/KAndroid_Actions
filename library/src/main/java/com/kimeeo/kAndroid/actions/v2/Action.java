@@ -3,11 +3,12 @@ package com.kimeeo.kAndroid.actions.v2;
 import android.app.Activity;
 
 /*
-import com.kimeeo.kAndroid.actions.v1.Download;
-import com.kimeeo.kAndroid.actions.v1.DownloadAndOpen;
-import com.kimeeo.kAndroid.actions.v1.ImageSet;
-import com.kimeeo.kAndroid.actions.v1.ImageShare;
+import Download;
+import DownloadAndOpen;
+import ImageSet;
+import ImageShare;
 */
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,12 +75,12 @@ public class Action extends BaseAction{
     EMailComposer mailTo;
     Phone phone;
 
-    /*
+
     Download download;
-    DownloadAndOpen downloadAndOpen;
+    OpenFile openFile;
     ImageSet imageSet;
-    ImageShare imageShare;
-    */
+    Share imageShare;
+
 
     public Action(Activity activity) {
         super(activity);
@@ -127,11 +128,11 @@ public class Action extends BaseAction{
         return textShare;
     }
 
-    /*
-    public DownloadAndOpen getDownloadAndOpen() {
-        if(downloadAndOpen==null)
-            downloadAndOpen = new DownloadAndOpen(activity);
-        return downloadAndOpen;
+
+    public OpenFile getOpenFile() {
+        if(openFile==null)
+            openFile = new OpenFile(activity);
+        return openFile;
     }
 
     public ImageSet getImageSet() {
@@ -140,17 +141,17 @@ public class Action extends BaseAction{
         return imageSet;
     }
 
-    public ImageShare getImageShare() {
+    public Share getImageShare() {
         if(imageShare==null)
-            imageShare = new ImageShare(activity);
+            imageShare = new Share(activity);
         return imageShare;
     }
 
-    public com.kimeeo.kAndroid.actions.v1.Download getDownload() {
+    public Download getDownload() {
         if(download==null)
-            download= new com.kimeeo.kAndroid.actions.v1.Download(activity);
+            download= new Download(activity);
         return download;
-    }*/
+    }
 
     public Copy getCopy() {
         if(copy==null)
@@ -201,11 +202,10 @@ public class Action extends BaseAction{
             textShare.clear();
         textShare=null;
 
-        /*
-        if(downloadAndOpen!=null)
-            downloadAndOpen.clear();
-        downloadAndOpen=null;
 
+        if(openFile!=null)
+            openFile.clear();
+        openFile=null;
 
         if(imageSet!=null)
             imageSet.clear();
@@ -218,7 +218,7 @@ public class Action extends BaseAction{
         if(download!=null)
             download.clear();
         download=null;
-        */
+
 
         if(copy!=null)
             copy.clear();
@@ -305,39 +305,87 @@ public class Action extends BaseAction{
         textShare.shareSimpleText(data, title);
     }
 
-    /*
-    public void downloadAndOpen(String link, String location, final String shareTitle, boolean showProgress, final String success, final String fail, final com.kimeeo.kAndroid.actions.v1.Download.DownloadResult downloadResult) {
-        DownloadAndOpen downloadAndOpen=getDownloadAndOpen();
-        downloadAndOpen.perform(link, location, shareTitle, showProgress, success, fail, downloadResult);
+    
+    public void downloadAndOpen(String link, String location, final String shareTitle, boolean showProgress, final String success, final String fail, DownloadFileAsync.DownloadWatcher downloadWatcher) {
+        OpenFile openFile=getOpenFile();
+        Download.DownoladConfig downoladConfig= new Download.DownoladConfig();
+        downoladConfig.watcher(downloadWatcher);
+        downoladConfig.link(link);
+        downoladConfig.folder(location);
+        downoladConfig.showProgress(showProgress);
+        downoladConfig.successMsg(success);
+        downoladConfig.failMsg(fail);
+        openFile.openWithDownoladConfig(downoladConfig);
     }
-    public void setImage(String link,String location,String shareTitle, boolean aTrue, final String success,final String fail,final com.kimeeo.kAndroid.actions.v1.Download.DownloadResult downloadResult) {
+    public void setImage(String link,String location,String shareTitle, boolean showProgress, final String success,final String fail,DownloadFileAsync.DownloadWatcher downloadWatcher) {
         ImageSet imageSet = getImageSet();
-        imageSet.perform(link, location, shareTitle, aTrue, success, fail, downloadResult);
+        Download.DownoladConfig downoladConfig= new Download.DownoladConfig();
+        downoladConfig.watcher(downloadWatcher);
+        downoladConfig.link(link);
+        downoladConfig.folder(location);
+        downoladConfig.showProgress(showProgress);
+        downoladConfig.successMsg(success);
+        downoladConfig.failMsg(fail);
+
+        imageSet.setWithDownoladConfig(downoladConfig);
+                //perform(link, location, shareTitle, aTrue, success, fail, downloadResult);
     }
-    public void shareImage(String link,String location,String shareTitle, boolean aTrue, final String success,final String fail,final com.kimeeo.kAndroid.actions.v1.Download.DownloadResult downloadResult) {
-        ImageShare imageShare=getImageShare();
-        imageShare.perform(link, location, shareTitle, aTrue, success, fail, downloadResult);
+    public void shareImage(String link,String location,String shareTitle, boolean showProgress,  String success, String fail,DownloadFileAsync.DownloadWatcher downloadWatcher) {
+        Share imageShare=getImageShare();
+        Download.DownoladConfig downoladConfig= new Download.DownoladConfig();
+        downoladConfig.watcher(downloadWatcher);
+        downoladConfig.link(link);
+        downoladConfig.folder(location);
+        downoladConfig.showProgress(showProgress);
+        downoladConfig.successMsg(success);
+        downoladConfig.failMsg(fail);
+        imageShare.share(null,null,false,"",downoladConfig);
     }
-    public void download(String link, String location, File targetFolder, final Boolean showProgress, final com.kimeeo.kAndroid.actions.v1.Download.DownloadResult downloadResult, String fileName)
+    public void download(String link, String location, File targetFolder,  Boolean showProgress,  DownloadFileAsync.DownloadWatcher downloadWatcher, String fileName)
     {
-        com.kimeeo.kAndroid.actions.v1.Download download=getDownload();
-        download.perform(link, location,targetFolder, showProgress, downloadResult, fileName);
-    }
-    public void download(String link, String location, final Boolean showProgress, final com.kimeeo.kAndroid.actions.v1.Download.DownloadResult downloadResult, String fileName)
-    {
-        com.kimeeo.kAndroid.actions.v1.Download download=getDownload();
-        download.perform(link, location, showProgress, downloadResult, fileName);
-    }
-    public void download(String link,String location,final Boolean showProgress,final com.kimeeo.kAndroid.actions.v1.Download.DownloadResult downloadResult)
-    {
-        com.kimeeo.kAndroid.actions.v1.Download download=getDownload();
-        download.perform(link, location, showProgress, downloadResult);
-    }
-    public void download(String link,String location, boolean showProgress,final String success,final String fail,final com.kimeeo.kAndroid.actions.v1.Download.DownloadResult downloadResult) {
         Download download=getDownload();
-        download.perform(link, location, showProgress, success, fail, downloadResult);
+        Download.DownoladConfig downoladConfig= new Download.DownoladConfig();
+        downoladConfig.watcher(downloadWatcher);
+        downoladConfig.link(link);
+        downoladConfig.folder(location);
+        downoladConfig.fileName(fileName);
+        downoladConfig.downloadToFolder(targetFolder);
+        downoladConfig.showProgress(showProgress);
+        download.startWithConfig(downoladConfig);
     }
-    */
+    public void download(String link, String location,  Boolean showProgress,  DownloadFileAsync.DownloadWatcher downloadWatcher, String fileName)
+    {
+        Download download=getDownload();
+        Download.DownoladConfig downoladConfig= new Download.DownoladConfig();
+        downoladConfig.watcher(downloadWatcher);
+        downoladConfig.link(link);
+        downoladConfig.folder(location);
+        downoladConfig.fileName(fileName);
+        downoladConfig.showProgress(showProgress);
+        download.startWithConfig(downoladConfig);
+    }
+    public void download(String link,String location, Boolean showProgress,DownloadFileAsync.DownloadWatcher downloadWatcher)
+    {
+        Download download=getDownload();
+        Download.DownoladConfig downoladConfig= new Download.DownoladConfig();
+        downoladConfig.watcher(downloadWatcher);
+        downoladConfig.link(link);
+        downoladConfig.folder(location);
+        downoladConfig.showProgress(showProgress);
+        download.startWithConfig(downoladConfig);
+    }
+    public void download(String link,String location, boolean showProgress, String success, String fail,DownloadFileAsync.DownloadWatcher downloadWatcher) {
+        Download download=getDownload();
+        Download.DownoladConfig downoladConfig= new Download.DownoladConfig();
+        downoladConfig.watcher(downloadWatcher);
+        downoladConfig.link(link);
+        downoladConfig.folder(location);
+        downoladConfig.successMsg(success);
+        downoladConfig.failMsg(fail);
+        downoladConfig.showProgress(showProgress);
+        download.startWithConfig(downoladConfig);
+    }
+
 
     public void copy(String data, String sucess)
     {
@@ -507,7 +555,7 @@ public class Action extends BaseAction{
             final String success = actionMap.get(ATTRIBUTE_SUCCESS_MSG);
             final String fail = actionMap.get(ATTRIBUTE_FAIL_MSG);
 
-            //download(link, null, showProgress.equals("true"), success, fail, null);
+            download(link, null, showProgress.equals("true"), success, fail, null);
         }
         else if(action.equals(ACTION_IMG_SHARE))
         {
@@ -522,7 +570,7 @@ public class Action extends BaseAction{
             final String success = actionMap.get(ATTRIBUTE_SUCCESS_MSG);
             final String fail = actionMap.get(ATTRIBUTE_FAIL_MSG);
 
-            //shareImage(link, null, title, showProgress.equals("true"), success, fail, null);
+            shareImage(link, null, title, showProgress.equals("true"), success, fail, null);
         }
         else if(action.equals(ACTION_IMG_SET))
         {
@@ -537,7 +585,7 @@ public class Action extends BaseAction{
             final String success = actionMap.get(ATTRIBUTE_SUCCESS_MSG);
             final String fail = actionMap.get(ATTRIBUTE_FAIL_MSG);
 
-            //setImage(link, null, title, showProgress.equals("true"), success, fail, null);
+            setImage(link, null, title, showProgress.equals("true"), success, fail, null);
         }
         else if(action.equals(ACTION_DOWNLOAD_FILE_AND_OPEN))
         {
@@ -553,7 +601,7 @@ public class Action extends BaseAction{
                 showProgress="true";
             final String success = actionMap.get(ATTRIBUTE_SUCCESS_MSG);
             final String fail = actionMap.get(ATTRIBUTE_FAIL_MSG);
-            //downloadAndOpen(link, null, title, showProgress.equals("true"), success, fail, null);
+            downloadAndOpen(link, null, title, showProgress.equals("true"), success, fail, null);
         }
         else if(actionType.equals(ACTION_SHOW_BUSY_DIALOG.toLowerCase()))
         {
