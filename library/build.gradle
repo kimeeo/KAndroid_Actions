@@ -22,7 +22,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
     final SUPPORT_LIBRARY_VERSION = '25.4.0'
     compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
 
@@ -30,7 +29,9 @@ dependencies {
     //This libray takes care of the runtime Permissions
     //https://github.com/ParkSangGwon/TedPermission
     //https://github.com/kimeeo/TedPermission
-    compile ('com.github.kimeeo:TedPermission:Ant-V1.0.0@aar'){
-        transitive=true
+    compile('com.github.kimeeo:TedPermission:Ant-V1.0.0@aar') {
+        transitive = true
     }
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
 }

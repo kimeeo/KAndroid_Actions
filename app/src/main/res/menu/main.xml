@@ -24,4 +24,10 @@
         android:orderInCategory="100"
         android:title="Set"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_open_web"
+        android:orderInCategory="100"
+        android:title="Open Webview"
+        app:showAsAction="never" />
 </menu>

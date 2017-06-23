@@ -1,6 +1,7 @@
 package com.kimeeo.kAndroid.actions.demo;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -17,7 +18,9 @@ import com.kimeeo.kAndroid.actions.v2.Download;
 import com.kimeeo.kAndroid.actions.v2.DownloadFileAsync;
 import com.kimeeo.kAndroid.actions.v2.ImageSet;
 import com.kimeeo.kAndroid.actions.v2.OpenFile;
+import com.kimeeo.kAndroid.actions.v2.OpenWebView;
 import com.kimeeo.kAndroid.actions.v2.Share;
+import com.kimeeo.kAndroid.actions.v2.WebViewActivity;
 
 import java.io.File;
 
@@ -107,6 +110,39 @@ public class MainActivity extends AppCompatActivity{
             new ImageSet(this).setWithDownoladConfig(config);
         else if(id==R.id.action_download_share)
             new Share(this).share("Share Data","Subject",false,null,config);
+        else if(id==R.id.action_open_web)
+        {
+            new OpenWebView(this).open(MyWebViewActivity.class,"http://www.google.com","ere");
+        }
         return super.onOptionsItemSelected(item);
+    }
+    public static class MyWebViewActivity extends WebViewActivity {
+        @LayoutRes
+        protected int getLayoutRes() {
+            return com.kimeeo.kAndroid.actions.R.layout._action_activity_web_view;
+        }
+        @Override
+        protected void onViewCreated() {
+
+        }
+        @Override
+        public void onBackPressed() {
+            super.onBackPressed();
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+        }
+
+        @Override
+        protected void onPause() {
+            super.onPause();
+        }
+
+        @Override
+        protected void onRestart() {
+            super.onRestart();
+        }
     }
 }
