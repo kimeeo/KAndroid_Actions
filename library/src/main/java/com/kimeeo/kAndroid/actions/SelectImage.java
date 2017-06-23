@@ -21,6 +21,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.gun0912.tedpermission.PermissionListener;
+import com.kimeeo.kAndroid.actions.v1.BaseAction;
+import com.kimeeo.kAndroid.actions.v2.Download;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -39,9 +41,7 @@ public class SelectImage extends BaseAction
 
     @Override
     public String[] requirePermissions() {
-        return new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA};
+        return new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
     }
     public String[] getFriendlyPermissionsMeaning() {return new String[]{"Storage","Camera"};}
 
@@ -134,7 +134,7 @@ public class SelectImage extends BaseAction
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
 
             // ExternalStorageProvider
-            if (isExternalStorageDocument(uri)) {
+            if (Download.isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
                 final String type = split[0];
@@ -228,7 +228,7 @@ public class SelectImage extends BaseAction
      * @param uri The Uri to check.
      * @return Whether the Uri authority is ExternalStorageProvider.
      */
-    public static boolean isExternalStorageDocument(Uri uri) {
+    public static boolean bisExternalStorageDocument(Uri uri) {
         return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
 

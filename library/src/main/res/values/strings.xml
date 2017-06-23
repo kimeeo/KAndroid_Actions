@@ -9,4 +9,14 @@
 
     <string name="_mayCostSMSChargeTitle">Attention</string>
     <string name="_mayCostSMSCharge">We will be sending SMS from you mobile no. You may charge for this.</string>
+    <string name="text_share_with">Share data with</string>
+    <string name="_mail_using_app">Mail Using</string>
+    <string name="_action_download_success_msg">Download Success</string>
+    <string name="_action_download_fail_msg">Download Failed</string>
+
+    <string name="_action_download_notification_title">Downloading File</string>
+    <string name="_action_download_notification_details">Downloading ...</string>
+    <string name="_action_open_file_with">Open file</string>
+    <string name="_action_share_file_with">Share file</string>
+
 </resources>
